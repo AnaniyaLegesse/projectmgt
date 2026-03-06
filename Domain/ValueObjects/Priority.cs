@@ -10,7 +10,6 @@ namespace Domain.ValueObj
     {
         public int Value { get; }
         public string Label { get; }
-
         private Priority(int value, string label)
         {
             Value = value;

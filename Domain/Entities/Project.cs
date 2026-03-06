@@ -16,6 +16,10 @@ namespace Domain.Entities
         public string? Description { get; private set; }
         public DateTime? Deadline { get; private set; }
 
+        private readonly List<ProjectTask> _tasks = new();
+
+        public virtual IReadOnlyCollection<ProjectTask> Tasks => _tasks.AsReadOnly();
+
         public Project(string name, string? description = null, DateTime? deadline = null)
         {
             if (string.IsNullOrWhiteSpace(name))
