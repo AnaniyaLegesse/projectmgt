@@ -1,5 +1,7 @@
 ﻿using Domain.common;
 using Domain.Enums;
+using Domain.Event;
+using Domain.ValueObj;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +10,49 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class ProjectTask: BaseDomainEntity
+    public class ProjectTask : BaseDomainEntity
     {
+        // Private setters enforce encapsulation
+        public string Title { get; private set; }
+        public ProjectTaskStatus Status { get; private set; }
+        public Priority Priority { get; private set; }
+        public DateTime? DueDate { get; private set; }
 
-        public string Title { get; set; } = string.Empty;
-        public string? Description { get; set; }
-        public ProjectTaskStatus Status { get; set; } = ProjectTaskStatus.Todo;
-        public int Priority { get; set; } 
+        public int ProjectId { get; private set; }
+        public int? AssigneeId { get; private set; }
 
-        // Foreign Key to Project
-        public int ProjectId { get; set; }
-        public Project Project { get; set; } = null!;
+        // Domain Events collection
+        private readonly List<object> _domainEvents = new();
+        public IReadOnlyCollection<object> DomainEvents => _domainEvents.AsReadOnly();
 
-        // Foreign Key to User (Assignee)
-        public int? AssigneeId { get; set; }
-        public User? Assignee { get; set; }
+        public ProjectTask(string title, Priority priority, int projectId)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                throw new ArgumentException("Title cannot be empty.");
 
-        // Relationship: One Task has many Comments
-        public List<Comment> Comments { get; set; } = new();
+            Title = title;
+            Priority = priority;
+            ProjectId = projectId;
+            Status = ProjectTaskStatus.Todo;
+        }
+
+        // Business Rule: You cannot complete a task without an assignee
+        public void Complete(int userId)
+        {
+            if (Status == ProjectTaskStatus.Done) return;
+
+            if (AssigneeId == null)
+                throw new InvalidOperationException("Cannot complete a task that has no assignee.");
+
+            Status = ProjectTaskStatus.Done;
+
+            // Trigger Domain Event
+            _domainEvents.Add(new TaskCompletedEvent(Id, AssigneeId.Value, DateTime.UtcNow));
+        }
+
+        public void UpdatePriority(Priority newPriority)
+        {
+            Priority = newPriority;
+        }
     }
 }
