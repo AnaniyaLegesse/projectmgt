@@ -8,6 +8,6 @@ namespace Application.Common.Interfaces
 {
     public interface ICurrentUserService
     {
-        int? UserId { get; } // Returns the ID of the user making the request
+        int? UserId { get; } 
     }
 }
