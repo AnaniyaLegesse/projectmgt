@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Features\Comments\Commands\" />
     <Folder Include="Features\Comments\Queries\" />
-    <Folder Include="Features\Projects\Commands\ArchiveProject\" />
     <Folder Include="Features\Tasks\Commands\" />
     <Folder Include="Features\Tasks\Queries\" />
     <Folder Include="Features\Users\Commands\" />

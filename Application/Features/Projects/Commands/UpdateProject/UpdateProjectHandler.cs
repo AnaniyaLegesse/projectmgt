@@ -1,5 +1,6 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
+using Application.Features.Projects.Commands.CreateProject;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -12,25 +13,26 @@ namespace Application.Features.Projects.Commands.UpdateProject
 {
     public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IProjectRepository _repository;
 
-        public UpdateProjectHandler(IApplicationDbContext context)
+        public UpdateProjectHandler(IProjectRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        public async Task Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateProjectCommand request, CancellationToken ct)
         {
-            var entity = await _context.Projects
-                .FindAsync(new object[] { request.Id }, cancellationToken);
+            // The repository handles the logic of finding the project
+            var entity = await _repository.GetByIdAsync(request.Id, ct);
 
             if (entity == null)
                 throw new NotFoundException(nameof(Project), request.Id);
 
-            // Call the Domain method to update state
-            entity.UpdateDetails(request.Description, request.Deadline);
+            // Call the Domain logic method
+            entity.UpdateDetails(request.Name, request.Description, request.Deadline);
 
-            await _context.SaveChangesAsync(cancellationToken);
+            // Persist changes
+            await _repository.SaveChangesAsync(ct);
         }
     }
 }

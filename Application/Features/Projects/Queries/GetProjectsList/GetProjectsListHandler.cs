@@ -2,6 +2,7 @@
 using Application.Common.Models;
 using AutoMapper;
 using MediatR;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,20 @@ namespace Application.Features.Projects.Queries.GetProjectsList
 {
     public class GetProjectsListHandler : IRequestHandler<GetProjectsListQuery, List<ProjectDto>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IProjectRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetProjectsListHandler(IApplicationDbContext context, IMapper mapper)
+        public GetProjectsListHandler(IProjectRepository repository, IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task<List<ProjectDto>> Handle(GetProjectsListQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProjectDto>> Handle(GetProjectsListQuery request, CancellationToken ct)
         {
-            return await _context.Projects
-                .AsNoTracking() // Best practice for Queries: improves performance
-                .ProjectTo<ProjectDto>(_mapper.ConfigurationProvider)
-                .OrderBy(p => p.Name)
-                .ToListAsync(cancellationToken);
+           var projects = await _repository.GetAllAsync(ct);
+
+            return _mapper.Map<List<ProjectDto>>(projects);
         }
     }
 }

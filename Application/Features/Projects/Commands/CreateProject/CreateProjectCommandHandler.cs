@@ -11,25 +11,20 @@ namespace Application.Features.Projects.Commands.CreateProject
 {
     public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, int>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IProjectRepository _repository;
 
-        public CreateProjectCommandHandler(IApplicationDbContext context)
+        public CreateProjectCommandHandler(IProjectRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        public async Task<int> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateProjectCommand request, CancellationToken ct)
         {
-            // 1. Create the Domain Entity using the constructor (which enforces rules)
             var entity = new Project(request.Name, request.Description, request.Deadline);
 
-            // 2. Add to the Change Tracker
-            _context.Projects.Add(entity);
+            _repository.Add(entity);
+            await _repository.SaveChangesAsync(ct);
 
-            // 3. Persist to Database
-            await _context.SaveChangesAsync(cancellationToken);
-
-            // 4. Return the new ID
             return entity.Id;
         }
     }
