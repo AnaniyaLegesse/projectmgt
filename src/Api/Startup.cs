@@ -42,7 +42,6 @@ namespace Api
             }
 
 
-
             //app.UseAuthentication();
 
             app.UseSwagger();

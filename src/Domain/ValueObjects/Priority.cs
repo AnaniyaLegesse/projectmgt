@@ -27,5 +27,17 @@ namespace Domain.ValueObj
             3 => High,
             _ => throw new ArgumentException("Invalid priority value.")
         };
+
+        public static Priority Parse(string label)
+        {
+            if (label is null) throw new ArgumentNullException(nameof(label));
+            return label.Trim().ToLowerInvariant() switch
+            {
+                "low" => Low,
+                "medium" => Medium,
+                "high" => High,
+                _ => throw new ArgumentException($"Unknown priority label: '{label}'", nameof(label))
+            };
+        }
     }
 }

@@ -21,22 +21,20 @@ namespace Domain.Entities
         public int ProjectId { get; private set; }
         public int? AssigneeId { get; private set; }
 
-        // Domain Events collection
+        
         private readonly List<object> _domainEvents = new();
         public IReadOnlyCollection<object> DomainEvents => _domainEvents.AsReadOnly();
 
-        public ProjectTask(string title, Priority priority, int projectId)
+        private ProjectTask() { }
+        public ProjectTask(string title, Priority taskPriority, int projectId)
         {
-            if (string.IsNullOrWhiteSpace(title))
-                throw new ArgumentException("Title cannot be empty.");
-
             Title = title;
-            Priority = priority;
+            Priority = taskPriority; 
             ProjectId = projectId;
             Status = ProjectTaskStatus.Todo;
         }
 
-        // Business Rule: You cannot complete a task without an assignee
+
         public void Complete(int userId)
         {
             if (Status == ProjectTaskStatus.Done) return;

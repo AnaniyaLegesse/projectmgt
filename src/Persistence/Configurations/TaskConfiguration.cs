@@ -24,6 +24,9 @@ public class TaskConfiguration : IEntityTypeConfiguration<ProjectTask>
         builder.HasOne<Project>()
             .WithMany(p => p.Tasks)
             .HasForeignKey(t => t.ProjectId)
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade);
+
+       builder.Property(t => t.Priority)
+              .HasConversion<string>();
     }
 }
