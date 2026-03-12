@@ -22,10 +22,7 @@ namespace Api
             services.AddPersistence(Configuration);
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project Managemet API", Version = "v1" });
-            });
+            services.AddSwaggerGen();
 
             services.AddCors(o =>
             {
@@ -49,7 +46,7 @@ namespace Api
             //app.UseAuthentication();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HRLeaveManagement.Api v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project Managment.Api v1"));
 
             app.UseHttpsRedirection();
 
