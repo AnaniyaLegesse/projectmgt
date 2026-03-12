@@ -9,6 +9,6 @@ public abstract class ApiControllerBase : ControllerBase
 {
     private ISender? _mediator;
 
-    // Uses the '??=' operator to only fetch the service if it's needed
+    // This property automatically resolves the MediatR service from the DI container
     protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 }

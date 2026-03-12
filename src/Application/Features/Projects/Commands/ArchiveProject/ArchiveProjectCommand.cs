@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Projects.Commands.ArchiveProject
 {
-    public record ArchiveProjectCommand(int Id) : IRequest;
+    public record ArchiveProjectCommand: IRequest
+    {
+        public int Id { get; set; }
+    }
 }
