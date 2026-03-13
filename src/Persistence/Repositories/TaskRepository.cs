@@ -2,11 +2,6 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories;
 
@@ -30,13 +25,18 @@ public class TaskRepository : ITaskRepository
 
     public async Task SaveChangesAsync(CancellationToken ct) => await _context.SaveChangesAsync(ct);
 
-    public Task<List<ProjectTask>> GetByProjectIdAsync(int projectId, CancellationToken ct)
+    public async Task<List<ProjectTask>> GetByProjectIdAsync(int projectId, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        // We use Where to filter and AsNoTracking for a performance boost on reads
+        return await _context.Tasks
+            .AsNoTracking()
+            .Where(t => t.ProjectId == projectId)
+            .ToListAsync(ct);
     }
 
     public void Delete(ProjectTask task)
     {
-        throw new NotImplementedException();
+        // This marks the entity for deletion; it will be removed when SaveChangesAsync is called
+        _context.Tasks.Remove(task);
     }
 }

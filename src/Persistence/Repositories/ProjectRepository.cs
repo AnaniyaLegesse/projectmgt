@@ -22,7 +22,6 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<Project?> GetByIdWithTasksAsync(int id, CancellationToken ct)
     {
-        // We 'Include' the tasks so the Domain Archive logic has the data it needs
         return await _context.Projects
             .Include(p => p.Tasks)
             .FirstOrDefaultAsync(p => p.Id == id, ct);
@@ -38,13 +37,16 @@ public class ProjectRepository : IProjectRepository
         await _context.SaveChangesAsync(ct);
     }
 
-    public Task<List<Project>> GetAllAsync(CancellationToken ct)
+    public async Task<List<Project>> GetAllAsync(CancellationToken ct)
     {
-        throw new NotImplementedException();
+    
+        return await _context.Projects
+            .AsNoTracking()
+            .ToListAsync(ct);
     }
 
     public void Update(Project project)
     {
-        throw new NotImplementedException();
+        _context.Projects.Update(project);
     }
 }
