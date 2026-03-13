@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Models;
+using Application.Features.ProjectTasks.Queries.GetProjectTaskById;
 using AutoMapper;
 using MediatR;
 using System;
@@ -8,15 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Tasks.Queries.GetProjectTaskById
+namespace Application.Features.ProjectTasks.Queries.GetProjectTaskById
 {
     public class GetProjectTaskByIdHandler : IRequestHandler<GetProjectTaskByIdQuery, ProjectTaskDto>
     {
 
-        private readonly ITaskRepository _repository;
+        private readonly IProjectTaskRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetProjectTaskByIdHandler(ITaskRepository repository, IMapper mapper)
+        public GetProjectTaskByIdHandler(IProjectTaskRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

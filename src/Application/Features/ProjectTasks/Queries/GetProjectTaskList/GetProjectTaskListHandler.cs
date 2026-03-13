@@ -10,15 +10,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Tasks.Queries.GetProjectTaskList
+namespace Application.Features.ProjectTasks.Queries.GetProjectTaskList
 {
     public class GetProjectTaskListHandler : IRequestHandler<GetProjectTaskListQuery, List<ProjectTaskDto>>
     {
 
-        private readonly ITaskRepository _repository;
+        private readonly IProjectTaskRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetProjectTaskListHandler(ITaskRepository repository, IMapper mapper)
+        public GetProjectTaskListHandler(IProjectTaskRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

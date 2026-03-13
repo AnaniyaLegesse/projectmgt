@@ -5,7 +5,7 @@ using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class TaskRepository : ITaskRepository
+public class TaskRepository : IProjectTaskRepository
 {
     private readonly ApplicationDbContext _context;
 

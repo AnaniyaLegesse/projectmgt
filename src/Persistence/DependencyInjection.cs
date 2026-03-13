@@ -23,7 +23,7 @@ public static class DependencyInjection
 
         // Registering the repository
         services.AddScoped<IProjectRepository, ProjectRepository>();
-        services.AddScoped<ITaskRepository, TaskRepository>(); 
+        services.AddScoped<IProjectTaskRepository, TaskRepository>(); 
 
         return services;
     }

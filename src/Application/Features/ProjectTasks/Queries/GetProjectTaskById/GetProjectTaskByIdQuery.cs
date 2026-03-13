@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Tasks.Queries.GetProjectTaskList
+namespace Application.Features.ProjectTasks.Queries.GetProjectTaskById
 {
-    public record GetProjectTaskListQuery(int Id) : IRequest<List<ProjectTaskDto>>;
+    public record GetProjectTaskByIdQuery(int id): IRequest<ProjectTaskDto>;
+    
 }
