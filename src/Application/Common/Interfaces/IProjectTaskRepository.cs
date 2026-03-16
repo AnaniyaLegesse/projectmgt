@@ -14,5 +14,6 @@ namespace Application.Common.Interfaces
         void Add(ProjectTask task);
         void Delete(ProjectTask task);
         Task SaveChangesAsync(CancellationToken ct);
+        void Update(ProjectTask task);
     }
 }

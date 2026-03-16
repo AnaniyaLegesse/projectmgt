@@ -1,7 +1,10 @@
 ﻿using Application.Common.Models;
-using Application.Features.Tasks.Commands;
-using Application.Features.Tasks.Queries;
-using Application.Features.Tasks.Queries.GetProjectTaskById;
+using Application.Features.ProjectTasks.Commands.CreateProjectTask;
+using Application.Features.ProjectTasks.Commands.DeleteProjectTask;
+using Application.Features.ProjectTasks.Commands.UpdateProjectTaskPriority;
+using Application.Features.ProjectTasks.Commands.UpdateProjectTaskStatus;
+using Application.Features.ProjectTasks.Queries.GetProjectTaskById;
+using Application.Features.ProjectTasks.Queries.GetProjectTaskList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -12,14 +15,14 @@ public class ProjectTasksController : ApiControllerBase
     [HttpGet("project/{projectId}")]
     public async Task<ActionResult<List<ProjectTaskDto>>> GetByProject(int projectId)
     {
-        return await Mediator.Send(new GetProjectTasksByProjectQuery { ProjectId = projectId });
+        return await Mediator.Send(new GetProjectTaskListQuery(projectId));
     }
 
     // GET: api/ProjectTasks/5
     [HttpGet("{id}")]
     public async Task<ActionResult<ProjectTaskDto>> GetById(int id)
     {
-        return await Mediator.Send(new GetProjectTaskByIdQuery { Id = id });
+        return await Mediator.Send(new GetProjectTaskByIdQuery(id));
     }
 
     // POST: api/ProjectTasks
@@ -53,7 +56,7 @@ public class ProjectTasksController : ApiControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        await Mediator.Send(new DeleteProjectTaskCommand { Id = id });
+        await Mediator.Send(new DeleteProjectTaskCommand(id));
         return NoContent();
     }
 }
