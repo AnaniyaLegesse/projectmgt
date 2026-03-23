@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.ValueObj;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -18,22 +19,21 @@ namespace Application.Features.ProjectTasks.Commands.CreateProjectTask
             _repository = repository;
         }
 
-        public async Task<int> Handle(CreateProjectTaskCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateProjectTaskCommand request, CancellationToken ct)
         {
+            // Use your existing Parse method to convert the string
+            // This handles casing (e.g., "High" or "high") automatically
+            var priority = Priority.Parse(request.PriorityLevel);
 
             var projectTask = new ProjectTask(
-            request.Title,
-            request.Priority,
-            request.ProjectId
-             );
+                request.Title,
+                priority,
+                request.ProjectId
+            );
 
-            
             _repository.Add(projectTask);
+            await _repository.SaveChangesAsync(ct);
 
-          
-            await _repository.SaveChangesAsync(cancellationToken);
-
-            
             return projectTask.Id;
         }
     }

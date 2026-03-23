@@ -18,7 +18,7 @@ namespace Application.Features.ProjectTasks.Commands.CreateProjectTask
             RuleFor(v => v.ProjectId)
                 .NotEmpty().WithMessage("Project Id is required.");
 
-            RuleFor(v => v.Priority)
+            RuleFor(v => v.PriorityLevel)
                 .NotEmpty().WithMessage("Priority is required.");
 
         }

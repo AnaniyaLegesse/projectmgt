@@ -19,14 +19,20 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         var priorityConverter = new ValueConverter<Priority, string>(
-            v => v.ToString(),            // store -> db
-            v => Priority.Parse(v)        // db -> CLR (implement Parse accordingly)
+            v => v.Label,              
+            v => Priority.Parse(v)       
         );
 
-        modelBuilder.Entity<ProjectTask>()
-            .Property(p => p.Priority)
-            .HasConversion(priorityConverter)
-            .HasMaxLength(50);
+        modelBuilder.Entity<ProjectTask>(entity =>
+        {
+            entity.Property(p => p.Priority)
+                .HasConversion(priorityConverter)
+                .HasMaxLength(20); 
+
+            
+            entity.Property(p => p.Status)
+                .HasConversion<string>();
+        });
     }
 }
 

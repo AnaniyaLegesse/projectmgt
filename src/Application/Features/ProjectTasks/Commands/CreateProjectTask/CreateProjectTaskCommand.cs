@@ -1,5 +1,4 @@
-﻿using Domain.ValueObj;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace Application.Features.ProjectTasks.Commands.CreateProjectTask
     public class CreateProjectTaskCommand : IRequest<int>
     {
         public string Title { get; set; }
-        public Priority Priority { get; set; }
+        public string PriorityLevel { get; set; } = "medium";
 
         public int ProjectId { get; set; }
     }
