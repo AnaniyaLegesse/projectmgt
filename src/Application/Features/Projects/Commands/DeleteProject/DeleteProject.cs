@@ -11,36 +11,26 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Projects.Commands.DeleteProject
 {
-   
+    public record DeleteProjectCommand(int Id) : IRequest;
 
-    namespace Application.Features.ProjectTasks.Commands.DeleteProject
+    public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand>
     {
+        private readonly IProjectRepository _projectRepository; 
 
-        public record DeleteProjectCommand(int Id) : IRequest;
-
-        public class DeleteProjectHandler : IRequestHandler<DeleteProjectCommand>
+        public DeleteProjectHandler(IProjectRepository projectRepository)
         {
-            private readonly IProjectTaskRepository _repository;
-
-            public DeleteProjectHandler(IProjectTaskRepository repository)
-            {
-                _repository = repository;
-            }
-
-            public async Task Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
-            {
-                var task = await _repository.GetByIdAsync(request.Id, cancellationToken);
-
-                if (task == null) throw new NotFoundException(nameof(ProjectTask), request.Id);
-
-
-
-                _repository.Delete(task);
-                await _repository.SaveChangesAsync(cancellationToken);
-            }
+            _projectRepository = projectRepository;
         }
 
+        public async Task Handle(DeleteProjectCommand request, CancellationToken ct)
+        {
+            var project = await _projectRepository.GetByIdAsync(request.Id, ct);
+
+            if (project == null) 
+                throw new NotFoundException(nameof(Project), request.Id);
+
+            _projectRepository.Delete(project);
+            await _projectRepository.SaveChangesAsync(ct);
+        }
     }
-
-
 }

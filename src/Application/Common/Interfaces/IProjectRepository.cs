@@ -15,6 +15,7 @@ namespace Application.Common.Interfaces
         Task<List<Project>> GetAllAsync(CancellationToken ct);
         void Add(Project project);
         void Update(Project project);
+        void Delete(Project project);
         Task SaveChangesAsync(CancellationToken ct);
     }
 }

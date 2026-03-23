@@ -49,4 +49,9 @@ public class ProjectRepository : IProjectRepository
     {
         _context.Projects.Update(project);
     }
+
+    public void Delete(Project project)
+    {
+        _context.Projects.Remove(project);
+    }
 }

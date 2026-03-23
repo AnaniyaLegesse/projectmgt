@@ -3,6 +3,7 @@ using Application.Common.Models;
 using Application.Features.Projects.Commands;
 using Application.Features.Projects.Commands.ArchiveProject;
 using Application.Features.Projects.Commands.CreateProject;
+using Application.Features.Projects.Commands.DeleteProject;
 using Application.Features.Projects.Queries;
 using Application.Features.Projects.Queries.GetProjectsList;
 using MediatR;
@@ -31,6 +32,14 @@ public class ProjectsController : ApiControllerBase
     public async Task<ActionResult> Archive(int id)
     {
         await Mediator.Send(new ArchiveProjectCommand { Id = id });
+        return NoContent();
+    }
+
+    //DELETE: api/project/id
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        await Mediator.Send(new DeleteProjectCommand (id));
         return NoContent();
     }
 }
