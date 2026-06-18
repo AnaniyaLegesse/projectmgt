@@ -13,6 +13,8 @@ namespace Domain.Entities
         public string Email { get; set; } = string.Empty;
         public string? AvatarUrl { get; set; }
 
+        public int Score {  get; set; }
+
         // Relationship: Tasks assigned to this user
         public List<ProjectTask> AssignedTasks { get; set; } = new();
 
@@ -22,5 +24,7 @@ namespace Domain.Entities
         // Relationship: Projects this user owns/created
         // (Optional: useful if you want to track who can delete a project)
         public List<Project> OwnedProjects { get; set; } = new();
+
+        public List<Team> Teams { get; set; } = new();
     }
 }

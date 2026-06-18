@@ -17,6 +17,10 @@ namespace Domain.Entities
         public string? Description { get; private set; }
         public DateTime? Deadline { get; private set; }
 
+        public int Score {  get; private set; }
+
+        public Team Team { get; private set; }
+
         // 1. State tracking
         public bool IsArchived { get; private set; }
 
