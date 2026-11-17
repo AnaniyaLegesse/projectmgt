@@ -3,7 +3,6 @@ using Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Persistence.Contexts;
-using Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +21,7 @@ public static class DependencyInjection
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
         // Registering the repository
-        services.AddScoped<IProjectRepository, ProjectRepository>();
-        services.AddScoped<IProjectTaskRepository, TaskRepository>(); 
+        
 
         return services;
     }
