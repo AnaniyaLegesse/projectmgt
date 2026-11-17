@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Tasks
+﻿namespace Domain.Tasks
 {
     public class BoardColumn
     {
@@ -12,9 +6,17 @@ namespace Domain.Tasks
         public int BoardId { get; set; }
         public Board Board { get; set; } = null!;
         public string Name { get; set; } = string.Empty;
-  
-        public int SortOrder { get; set; } = 0;
-        public int WipLimit { get; set; } = 0;
+        public int SortOrder { get; set; }
+        public int WipLimit { get; private set; }
 
+        public void SetWipLimit(int wipLimit)
+        {
+            if (wipLimit < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(wipLimit), "The WIP limit cannot be negative.");
+            }
+
+            WipLimit = wipLimit;
+        }
     }
 }

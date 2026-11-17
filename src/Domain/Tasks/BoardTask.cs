@@ -13,8 +13,7 @@ namespace Domain.Tasks
         public Board Board { get; set; } = null!;
         public int ColumnId { get; set; }
         public BoardColumn Column { get; set; } = null!;
-        public int TraskId { get; set; }
-
+        public int TaskId { get; set; }
         public Task Task { get; set; } = null!;
         public string Rank { get; set; } = string.Empty;
 

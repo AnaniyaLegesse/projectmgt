@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Projects
+﻿namespace Domain.Projects
 {
     public class ProjectGoal
     {
@@ -14,10 +8,25 @@ namespace Domain.Projects
         public int? ParentId { get; set; }
         public ProjectGoal? Parent { get; set; }
         public string Title { get; set; } = string.Empty;
-        public decimal TargetValue { get; set; }
-        public decimal CurrentValue { get; set; }
+        public decimal TargetValue { get; private set; }
+        public decimal CurrentValue { get; private set; }
         public DateTime DueDate { get; set; }
         public string Status { get; set; } = string.Empty;
 
+        public void UpdateProgress(decimal targetValue, decimal currentValue)
+        {
+            if (targetValue < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(targetValue), "The target value cannot be negative.");
+            }
+
+            if (currentValue < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(currentValue), "The current value cannot be negative.");
+            }
+
+            TargetValue = targetValue;
+            CurrentValue = currentValue;
+        }
     }
 }

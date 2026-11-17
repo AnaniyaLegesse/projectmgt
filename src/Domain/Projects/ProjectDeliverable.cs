@@ -12,8 +12,8 @@ namespace Domain.Projects
         public int ProjectId { get; set; }
         public Project Project { get; set; } = null!;
        
-        public int MilstoneId { get; set; }
-        public ProjectMilstone Milstone { get; set; } = null!;
+        public int MilestoneId { get; set; }
+        public ProjectMilestone Milestone { get; set; } = null!;
 
         public string Name { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;

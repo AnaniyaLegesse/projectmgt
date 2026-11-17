@@ -12,10 +12,10 @@ namespace Domain.Tasks
         public int Id { get; set; }
         public int TaskId { get; set; }
         public Task Task { get; set; } = null!;
-        public int FieldDefinationId { get; set; }
-        public CustomFieldDefination FieldDefination { get; set; } = null!;
+        public int FieldDefinitionId { get; set; }
+        public CustomFieldDefinition FieldDefinition { get; set; } = null!;
 
         [Column(TypeName = "jsonb")]
-        public string Value { get; set; } = null!;
+        public string Value { get; set; } = string.Empty;
     }
 }

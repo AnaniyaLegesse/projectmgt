@@ -14,7 +14,7 @@ namespace Domain.Tasks
         public ProjectGoal Goal { get; set; } = null!;
         public int TaskId { get; set; }
         public Task Task { get; set; } = null!;
-        public decimal? weight { get; set; }
+        public decimal? Weight { get; set; }
 
     }
 }

@@ -16,10 +16,10 @@ namespace Domain.Projects
         public string Name { get; set; } = string.Empty;
         public string Key { get; set; } = string.Empty;
          
-        public String Status { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
 
         public DateTime DueDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? ActualEndDate { get; set; }
 
         public int OwnerId { get; set; }
         public User Owner { get; set; } = null!;
