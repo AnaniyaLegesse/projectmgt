@@ -14,8 +14,8 @@ namespace Domain.Projects
         public int? ParentId { get; set; }
         public ProjectGoal? Parent { get; set; }
         public string Title { get; set; } = string.Empty;
-        public int TargetValue { get; set; }
-        public int CurrentValue { get; set; }
+        public decimal TargetValue { get; set; }
+        public decimal CurrentValue { get; set; }
         public DateTime DueDate { get; set; }
         public string Status { get; set; } = string.Empty;
 
