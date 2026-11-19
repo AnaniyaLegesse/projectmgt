@@ -1,5 +1,4 @@
-﻿using Application;
-using Persistence;
+﻿using Persistence;
 using Microsoft.OpenApi;
 
 namespace Api
@@ -18,7 +17,6 @@ namespace Api
         {
             services.AddHttpContextAccessor();
 
-            services.AddApplication();
             services.AddPersistence(Configuration);
 
             services.AddControllers();
